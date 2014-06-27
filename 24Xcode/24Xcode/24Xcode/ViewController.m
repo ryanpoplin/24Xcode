@@ -25,15 +25,17 @@
 
 @implementation ViewController
 
+UILocalNotification *futureAlert;
+
 -(void)countUp {
     
-    if (self.count == 1800) {
+    if (self.count == 100) {
         
         [self.theTimer invalidate];
         
         self.theTimer = nil;
         
-        [[UIApplication sharedApplication] endBackgroundTask:self.counterTask];
+        [[UIApplication sharedApplication] scheduleLocalNotification: futureAlert];
     
     } else {
     
@@ -55,33 +57,27 @@
     
     [super viewDidLoad];
     
-    self.count = 0;
-    
-    self.theTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(countUp) userInfo:nil repeats:YES];
-    
-    UILocalNotification *futureAlert;
+    [[UIApplication sharedApplication] endBackgroundTask:self.counterTask];
     
     futureAlert = [[UILocalNotification alloc] init];
     
-    [futureAlert setAlertBody:@"Almost 10 minutes bitch boy..."];
+    [futureAlert setAlertBody:@"Fuck You..."];
     
     // [futureAlert setSoundName:<#(NSString *)#>];
     
-    futureAlert.fireDate = [NSDate dateWithTimeIntervalSinceNow:5];
+    futureAlert.fireDate = [NSDate dateWithTimeIntervalSinceNow:1];
     
     futureAlert.timeZone = [NSTimeZone defaultTimeZone];
     
-    if (self.count >= 590) {
-        
-        [[UIApplication sharedApplication] scheduleLocalNotification: futureAlert];
-        
-    }
+    self.count = 0;
+    
+    self.theTimer = [NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(countUp) userInfo:nil repeats:YES];
     
     self.counterTask = [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:^{
         
         if (self.count >= 590) {
             
-            self.theTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(countUp) userInfo:nil repeats:YES];
+            self.theTimer = [NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(countUp) userInfo:nil repeats:YES];
         
         }
         
