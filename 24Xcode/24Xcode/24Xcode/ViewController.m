@@ -1,4 +1,3 @@
-
 //
 //  ViewController.m
 //  24Xcode
@@ -21,6 +20,8 @@
 
 @property (nonatomic, weak) NSTimer *theTimer;
 
+@property (nonatomic, weak) NSTimer *daemonTimer;
+
 -(void)countUp;
 
 @end
@@ -31,11 +32,20 @@ UILocalNotification *futureAlert;
 
 -(void)countUp {
     
-    if (self.count == 800) {
+    // 11 min...
+    if (self.count == 120) {
         
         [self.theTimer invalidate];
         
         self.theTimer = nil;
+        
+    } else if (self.count == 760) {
+        
+        [self.daemonTimer invalidate];
+        
+        self.daemonTimer = nil;
+        
+        [[UIApplication sharedApplication] endBackgroundTask:self.counterTask];
         
         [[UIApplication sharedApplication] scheduleLocalNotification: futureAlert];
         
@@ -43,6 +53,7 @@ UILocalNotification *futureAlert;
         
         self.count++;
         
+        //
         NSString *currentCount;
         
         currentCount = [NSString stringWithFormat:@"%d", self.count];
@@ -59,8 +70,6 @@ UILocalNotification *futureAlert;
     
     [super viewDidLoad];
     
-    [[UIApplication sharedApplication] endBackgroundTask:self.counterTask];
-    
     futureAlert = [[UILocalNotification alloc] init];
     
     [futureAlert setAlertBody:@"The Iron Yard..."];
@@ -73,16 +82,16 @@ UILocalNotification *futureAlert;
     
     self.count = 0;
     
-    if (self.count <= 599) {
-
+    // if (self.count < 599) {
+        
         self.theTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(countUp) userInfo:nil repeats:YES];
-
-    }
+        
+    // }
     
     // SO THIS SHOULD TAKE CARE OF IT WITHOUT HANDLING STUFF FOR 10 MIN...?
     self.counterTask = [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:^{
         
-        self.theTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(countUp) userInfo:nil repeats:YES];
+        self.daemonTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(countUp) userInfo:nil repeats:YES];
         
     }];
     
