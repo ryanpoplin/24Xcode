@@ -11,14 +11,14 @@
 
 @interface ViewController ()
 
-
+@property (weak, nonatomic) IBOutlet UILabel *theCount;
 
 @end
 
 @implementation ViewController
             
 - (void)viewDidLoad {
-
+    
     [super viewDidLoad];
     
     // Do any additional setup after loading the view, typically from a nib.
@@ -42,6 +42,23 @@
     futureAlert.timeZone = [NSTimeZone defaultTimeZone];
     
     [[UIApplication sharedApplication] scheduleLocalNotification: futureAlert];
+    
+    // A LONG-RUNNING BACKGROUND/DAEMON TASK...
+    UIBackgroundTaskIdentifier aLongFuckingTask;
+    
+    aLongFuckingTask = [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:^{
+        
+            // 10 MIN IS ALL WE'VE GOT...
+        
+            // I CAN CHANGE THAT HERE...
+        
+            // WHERE THE FUCK DOES THIS GO?
+        
+            // [[UIApplication sharedApplication] endBackgroundTask:aLongFuckingTask];
+        
+            // SO BASICALLY THE AMOUNT OF TIME LEFT IN THE 'afterRemainder' VARIABLE NEEDS TO BE HOW LONG THIS BACKGROUND PROCESS SHOULD RUN...
+        
+    }];
     
 }
 
