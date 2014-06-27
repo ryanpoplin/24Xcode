@@ -13,19 +13,74 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *theCount;
 
+@property (nonatomic) int count;
+
+@property (nonatomic) UIBackgroundTaskIdentifier counterTask;
+
+@property (nonatomic, weak) NSTimer *theTimer;
+
+-(void)countUp;
+
 @end
 
 @implementation ViewController
-            
+
+-(void)countUp {
+    
+    // RUN THAT SHIT FOR 30 MINUTES...
+    if (self.count == 1800) {
+        
+        [self.theTimer invalidate];
+        
+        self.theTimer = nil;
+        
+        [[UIApplication sharedApplication] endBackgroundTask:self.counterTask];
+    
+    } else {
+    
+        self.count++;
+        
+        NSString *currentCount;
+        
+        currentCount = [NSString stringWithFormat:@"%d", self.count];
+        
+        self.theCount.text = currentCount;
+    
+        NSLog(@"%d", self.count);
+        
+    }
+    
+}
+
 - (void)viewDidLoad {
     
     [super viewDidLoad];
+    
+    /* COUNTER CODE... */
+    
+    self.count = 0;
+    
+    self.theTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(countUp) userInfo:nil repeats:YES];
+    
+    self.counterTask = [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:^{
+        
+        // WILL THIS CONTINUE THE COUNTUP???
+        
+        if (self.count >= 590) {
+         
+            self.theTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(countUp) userInfo:nil repeats:YES];
+        
+        }
+        
+    }];
     
     // Do any additional setup after loading the view, typically from a nib.
 
     // THIS WILL ONLY OCCUR WHEN THE APP IS IN THE BACKGROUND...
     
     // THIS IS BECAUSE IT'S A BACKGROUND/MULTITASKING SPECIFIC PROCESS (IT'S A MOTHER FUCKING DAEMON)...
+    
+    /* NOTIFICATION CODE...(PUSH NOTIFICATION...) */
     
     UILocalNotification *futureAlert;
     
@@ -42,23 +97,6 @@
     futureAlert.timeZone = [NSTimeZone defaultTimeZone];
     
     [[UIApplication sharedApplication] scheduleLocalNotification: futureAlert];
-    
-    // A LONG-RUNNING BACKGROUND/DAEMON TASK...
-    UIBackgroundTaskIdentifier aLongFuckingTask;
-    
-    aLongFuckingTask = [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:^{
-        
-            // 10 MIN IS ALL WE'VE GOT...
-        
-            // I CAN CHANGE THAT HERE...
-        
-            // WHERE THE FUCK DOES THIS GO?
-        
-            // [[UIApplication sharedApplication] endBackgroundTask:aLongFuckingTask];
-        
-            // SO BASICALLY THE AMOUNT OF TIME LEFT IN THE 'afterRemainder' VARIABLE NEEDS TO BE HOW LONG THIS BACKGROUND PROCESS SHOULD RUN...
-        
-    }];
     
 }
 
