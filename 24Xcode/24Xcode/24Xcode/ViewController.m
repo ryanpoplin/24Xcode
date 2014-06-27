@@ -96,7 +96,7 @@ UILocalNotification *futureAlert;
         
         self.theTimer = nil;
         
-        NSLog(@"It's been 2 min. bitch...");
+        NSLog(@"It's been 2 or 3 min. bitch...");
         
         self.daemonTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(countUp) userInfo:nil repeats:YES];
         
