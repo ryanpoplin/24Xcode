@@ -29,16 +29,16 @@ UILocalNotification *futureAlert;
 
 -(void)countUp {
     
-    if (self.count == 100) {
+    if (self.count == 1800) {
         
         [self.theTimer invalidate];
         
         self.theTimer = nil;
         
         [[UIApplication sharedApplication] scheduleLocalNotification: futureAlert];
-    
+        
     } else {
-    
+        
         self.count++;
         
         NSString *currentCount;
@@ -46,7 +46,7 @@ UILocalNotification *futureAlert;
         currentCount = [NSString stringWithFormat:@"%d", self.count];
         
         self.theCount.text = currentCount;
-    
+        
         NSLog(@"%d", self.count);
         
     }
@@ -71,14 +71,14 @@ UILocalNotification *futureAlert;
     
     self.count = 0;
     
-    self.theTimer = [NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(countUp) userInfo:nil repeats:YES];
+    self.theTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(countUp) userInfo:nil repeats:YES];
     
     self.counterTask = [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:^{
         
         if (self.count >= 590) {
             
-            self.theTimer = [NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(countUp) userInfo:nil repeats:YES];
-        
+            self.theTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(countUp) userInfo:nil repeats:YES];
+            
         }
         
     }];
@@ -89,7 +89,7 @@ UILocalNotification *futureAlert;
     
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
-
+    
 }
 
 @end
