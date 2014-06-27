@@ -33,13 +33,14 @@ UILocalNotification *futureAlert;
 -(void)countUp {
     
     // 11 min...
-    if (self.count == 120) {
+    
+    /*if (self.count >= 120) {
         
         [self.theTimer invalidate];
         
         self.theTimer = nil;
         
-    } else if (self.count == 760) {
+    } else*/ if (self.count == 760) {
         
         [self.daemonTimer invalidate];
         
@@ -83,13 +84,19 @@ UILocalNotification *futureAlert;
     self.count = 0;
     
     // if (self.count < 599) {
-        
+    
         self.theTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(countUp) userInfo:nil repeats:YES];
         
     // }
     
-    // SO THIS SHOULD TAKE CARE OF IT WITHOUT HANDLING STUFF FOR 10 MIN...?
+    // SO THIS SHOULD TAKE CARE OF IT WITHOUT HANDLING STUFF FOR 2 MIN...?
     self.counterTask = [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:^{
+        
+        [self.theTimer invalidate];
+        
+        self.theTimer = nil;
+        
+        NSLog(@"It's been 2 min. bitch...");
         
         self.daemonTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(countUp) userInfo:nil repeats:YES];
         
