@@ -9,6 +9,8 @@
 
 #import "ViewController.h"
 
+// HERE'S A TEST PROGRAM TO TEST OUT LOCAL/PUSH NOTIFICATIONS AS WELL AS BACKGROUND PROCESSING/MULTITASKING VIA DAEMONS...
+
 @interface ViewController ()
 
 @property (weak, nonatomic) IBOutlet UILabel *theCount;
@@ -29,7 +31,7 @@ UILocalNotification *futureAlert;
 
 -(void)countUp {
     
-    if (self.count == 1800) {
+    if (self.count == 800) {
         
         [self.theTimer invalidate];
         
@@ -61,7 +63,7 @@ UILocalNotification *futureAlert;
     
     futureAlert = [[UILocalNotification alloc] init];
     
-    [futureAlert setAlertBody:@"Fuck You..."];
+    [futureAlert setAlertBody:@"The Iron Yard..."];
     
     // [futureAlert setSoundName:<#(NSString *)#>];
     
@@ -71,15 +73,16 @@ UILocalNotification *futureAlert;
     
     self.count = 0;
     
-    self.theTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(countUp) userInfo:nil repeats:YES];
+    if (self.count <= 599) {
+
+        self.theTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(countUp) userInfo:nil repeats:YES];
+
+    }
     
+    // SO THIS SHOULD TAKE CARE OF IT WITHOUT HANDLING STUFF FOR 10 MIN...?
     self.counterTask = [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:^{
         
-        if (self.count >= 590) {
-            
-            self.theTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(countUp) userInfo:nil repeats:YES];
-            
-        }
+        self.theTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(countUp) userInfo:nil repeats:YES];
         
     }];
     
