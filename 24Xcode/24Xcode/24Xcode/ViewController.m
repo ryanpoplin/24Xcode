@@ -20,8 +20,29 @@
 - (void)viewDidLoad {
 
     [super viewDidLoad];
+    
     // Do any additional setup after loading the view, typically from a nib.
 
+    // THIS WILL ONLY OCCUR WHEN THE APP IS IN THE BACKGROUND...
+    
+    // THIS IS BECAUSE IT'S A BACKGROUND/MULTITASKING SPECIFIC PROCESS (IT'S A MOTHER FUCKING DAEMON)...
+    
+    UILocalNotification *futureAlert;
+    
+    futureAlert = [[UILocalNotification alloc] init];
+    
+    // BE VERY AWARE OF THESE METHODS...
+    
+    [futureAlert setAlertBody:@"24Xcode Bitch..."];
+    
+    // [futureAlert setSoundName:<#(NSString *)#>];
+    
+    futureAlert.fireDate = [NSDate dateWithTimeIntervalSinceNow:5];
+    
+    futureAlert.timeZone = [NSTimeZone defaultTimeZone];
+    
+    [[UIApplication sharedApplication] scheduleLocalNotification: futureAlert];
+    
 }
 
 - (void)didReceiveMemoryWarning {
