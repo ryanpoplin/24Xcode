@@ -8,8 +8,6 @@
 
 #import "ViewController.h"
 
-// HERE'S A TEST PROGRAM TO TEST OUT LOCAL/PUSH NOTIFICATIONS AS WELL AS BACKGROUND PROCESSING/MULTITASKING VIA DAEMONS...
-
 @interface ViewController ()
 
 @property (weak, nonatomic) IBOutlet UILabel *theCount;
@@ -32,19 +30,15 @@ UILocalNotification *futureAlert;
 
 -(void)countUp {
     
-    // 11 min...
-    
-    /*if (self.count >= 120) {
+    if (self.count == 20) {
+        
+        // [self.daemonTimer invalidate];
+        
+        // self.daemonTimer = nil;
         
         [self.theTimer invalidate];
         
         self.theTimer = nil;
-        
-    } else*/ if (self.count == 760) {
-        
-        [self.daemonTimer invalidate];
-        
-        self.daemonTimer = nil;
         
         [[UIApplication sharedApplication] endBackgroundTask:self.counterTask];
         
@@ -53,8 +47,7 @@ UILocalNotification *futureAlert;
     } else {
         
         self.count++;
-        
-        //
+    
         NSString *currentCount;
         
         currentCount = [NSString stringWithFormat:@"%d", self.count];
@@ -70,6 +63,22 @@ UILocalNotification *futureAlert;
 - (void)viewDidLoad {
     
     [super viewDidLoad];
+    
+    if ([[UIDevice currentDevice] respondsToSelector:@selector(isMultitaskingSupported)])
+    
+    {
+    
+        NSLog(@"Multitasking Supported...");
+    
+    }
+    
+    else
+    
+    {
+    
+        NSLog(@"Multitasking Not Supported...");
+    
+    }
     
     futureAlert = [[UILocalNotification alloc] init];
     
@@ -89,18 +98,19 @@ UILocalNotification *futureAlert;
         
     // }
     
-    // SO THIS SHOULD TAKE CARE OF IT WITHOUT HANDLING STUFF FOR 2 MIN...?
     self.counterTask = [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:^{
         
-        [self.theTimer invalidate];
+        // [self.theTimer invalidate];
         
-        self.theTimer = nil;
+        // self.theTimer = nil;
         
-        NSLog(@"It's been 2 or 3 min. bitch...");
+        // NSLog(@"asdfjkl;");
         
-        self.daemonTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(countUp) userInfo:nil repeats:YES];
+        // self.daemonTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(countUp) userInfo:nil repeats:YES];
         
     }];
+    
+    [[UIApplication sharedApplication] backgroundTimeRemaining];
     
 }
 
