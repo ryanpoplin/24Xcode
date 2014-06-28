@@ -30,7 +30,7 @@ UILocalNotification *futureAlert;
 
 -(void)countUp {
     
-    if (self.count == 20) {
+    if (self.count == 1800) {
         
         // [self.daemonTimer invalidate];
         
@@ -54,7 +54,7 @@ UILocalNotification *futureAlert;
         
         self.theCount.text = currentCount;
         
-        NSLog(@"%d", self.count);
+        NSLog(@"%.2d", self.count);
         
     }
     
@@ -64,10 +64,30 @@ UILocalNotification *futureAlert;
     
     [super viewDidLoad];
     
+    self.counterTask = [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:^{
+        
+        // [self.theTimer invalidate];
+        
+        // self.theTimer = nil;
+        
+        // NSLog(@"asdfjkl;");
+        
+        // self.daemonTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(countUp) userInfo:nil repeats:YES];
+        
+        NSLog(@"Fuck...");
+        
+    }];
+    
     if ([[UIDevice currentDevice] respondsToSelector:@selector(isMultitaskingSupported)])
     
     {
     
+        double backgroundTime;
+        
+        backgroundTime = [[UIApplication sharedApplication] backgroundTimeRemaining];
+        
+        NSLog(@"%f", ceil(backgroundTime));
+        
         NSLog(@"Multitasking Supported...");
     
     }
@@ -82,7 +102,7 @@ UILocalNotification *futureAlert;
     
     futureAlert = [[UILocalNotification alloc] init];
     
-    [futureAlert setAlertBody:@"The Iron Yard..."];
+    [futureAlert setAlertBody:@"..."];
     
     // [futureAlert setSoundName:<#(NSString *)#>];
     
@@ -97,20 +117,6 @@ UILocalNotification *futureAlert;
         self.theTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(countUp) userInfo:nil repeats:YES];
         
     // }
-    
-    self.counterTask = [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:^{
-        
-        // [self.theTimer invalidate];
-        
-        // self.theTimer = nil;
-        
-        // NSLog(@"asdfjkl;");
-        
-        // self.daemonTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(countUp) userInfo:nil repeats:YES];
-        
-    }];
-    
-    [[UIApplication sharedApplication] backgroundTimeRemaining];
     
 }
 
