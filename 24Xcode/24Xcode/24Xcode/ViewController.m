@@ -32,9 +32,9 @@ UILocalNotification *futureAlert;
     
     if (self.count == 1800) {
         
-        // [self.daemonTimer invalidate];
+        [self.daemonTimer invalidate];
         
-        // self.daemonTimer = nil;
+        self.daemonTimer = nil;
         
         [self.theTimer invalidate];
         
@@ -66,13 +66,7 @@ UILocalNotification *futureAlert;
     
     self.counterTask = [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:^{
         
-        // [self.theTimer invalidate];
-        
-        // self.theTimer = nil;
-        
-        // NSLog(@"asdfjkl;");
-        
-        // self.daemonTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(countUp) userInfo:nil repeats:YES];
+        self.daemonTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(countUp) userInfo:nil repeats:YES];
         
         NSLog(@"Fuck...");
         
