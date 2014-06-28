@@ -36,6 +36,10 @@ UILocalNotification *futureAlert;
         
         self.daemonTimer = nil;
         
+        [[UIApplication sharedApplication] endBackgroundTask:self.counterTask];
+        
+        self.counterTask = UIBackgroundTaskInvalid;
+        
         [[UIApplication sharedApplication] scheduleLocalNotification: futureAlert];
         
     } else {
@@ -59,10 +63,6 @@ UILocalNotification *futureAlert;
     [super viewDidLoad];
     
     self.counterTask = [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:^{
-        
-        [[UIApplication sharedApplication] endBackgroundTask:self.counterTask];
-        
-        self.counterTask = UIBackgroundTaskInvalid;
         
         [self.theTimer invalidate];
         
