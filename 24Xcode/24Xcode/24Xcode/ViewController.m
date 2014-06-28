@@ -30,15 +30,11 @@ UILocalNotification *futureAlert;
 
 -(void)countUp {
     
-    if (self.count == 1800) {
+    if (self.count == 1200) {
         
         [self.daemonTimer invalidate];
         
         self.daemonTimer = nil;
-        
-        [self.theTimer invalidate];
-        
-        self.theTimer = nil;
         
         [[UIApplication sharedApplication] endBackgroundTask:self.counterTask];
         
@@ -65,6 +61,10 @@ UILocalNotification *futureAlert;
     [super viewDidLoad];
     
     self.counterTask = [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:^{
+        
+        [self.theTimer invalidate];
+        
+        self.theTimer = nil;
         
         self.daemonTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(countUp) userInfo:nil repeats:YES];
         
@@ -106,11 +106,7 @@ UILocalNotification *futureAlert;
     
     self.count = 0;
     
-    // if (self.count < 599) {
-    
-        self.theTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(countUp) userInfo:nil repeats:YES];
-        
-    // }
+    self.theTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(countUp) userInfo:nil repeats:YES];
     
 }
 
