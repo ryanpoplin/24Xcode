@@ -36,8 +36,6 @@ UILocalNotification *futureAlert;
         
         self.daemonTimer = nil;
         
-        [[UIApplication sharedApplication] endBackgroundTask:self.counterTask];
-        
         [[UIApplication sharedApplication] scheduleLocalNotification: futureAlert];
         
     } else {
@@ -62,13 +60,15 @@ UILocalNotification *futureAlert;
     
     self.counterTask = [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:^{
         
+        [[UIApplication sharedApplication] endBackgroundTask:self.counterTask];
+        
+        self.counterTask = UIBackgroundTaskInvalid;
+        
         [self.theTimer invalidate];
         
         self.theTimer = nil;
         
         self.daemonTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(countUp) userInfo:nil repeats:YES];
-        
-        // NSLog(@"Fuck...");
         
     }];
     
