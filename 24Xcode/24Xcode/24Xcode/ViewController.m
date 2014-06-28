@@ -50,7 +50,7 @@ UILocalNotification *futureAlert;
         
         self.theCount.text = currentCount;
         
-        NSLog(@"%.2d", self.count);
+        // NSLog(@"%.2d", self.count);
         
     }
     
@@ -68,7 +68,7 @@ UILocalNotification *futureAlert;
         
         self.daemonTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(countUp) userInfo:nil repeats:YES];
         
-        NSLog(@"Fuck...");
+        // NSLog(@"Fuck...");
         
     }];
     
@@ -80,9 +80,9 @@ UILocalNotification *futureAlert;
         
         backgroundTime = [[UIApplication sharedApplication] backgroundTimeRemaining];
         
-        NSLog(@"%f", ceil(backgroundTime));
+        // NSLog(@"%f", ceil(backgroundTime));
         
-        NSLog(@"Multitasking Supported...");
+        // NSLog(@"Multitasking Supported...");
     
     }
     
@@ -90,7 +90,7 @@ UILocalNotification *futureAlert;
     
     {
     
-        NSLog(@"Multitasking Not Supported...");
+        // NSLog(@"Multitasking Not Supported...");
     
     }
     
