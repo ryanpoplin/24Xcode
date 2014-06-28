@@ -20,27 +20,25 @@
 
 @property (nonatomic, weak) NSTimer *daemonTimer;
 
+@property (nonatomic) UILocalNotification *futureAlert;
+
 -(void)countUp;
 
 @end
 
 @implementation ViewController
 
-UILocalNotification *futureAlert;
-
 -(void)countUp {
     
-    if (self.count == 1200) {
+    if (self.count == 605) {
+        
+        [[UIApplication sharedApplication] scheduleLocalNotification: _futureAlert];
         
         [self.daemonTimer invalidate];
         
         self.daemonTimer = nil;
         
         [[UIApplication sharedApplication] endBackgroundTask:self.counterTask];
-        
-        self.counterTask = UIBackgroundTaskInvalid;
-        
-        [[UIApplication sharedApplication] scheduleLocalNotification: futureAlert];
         
     } else {
         
@@ -51,8 +49,6 @@ UILocalNotification *futureAlert;
         currentCount = [NSString stringWithFormat:@"%d", self.count];
         
         self.theCount.text = currentCount;
-        
-        // NSLog(@"%.2d", self.count);
         
     }
     
@@ -72,15 +68,15 @@ UILocalNotification *futureAlert;
         
     }];
     
-    futureAlert = [[UILocalNotification alloc] init];
+    _futureAlert = [[UILocalNotification alloc] init];
     
-    [futureAlert setAlertBody:@"..."];
+    [_futureAlert setAlertBody:@"..."];
     
     // [futureAlert setSoundName:<#(NSString *)#>];
     
-    futureAlert.fireDate = [NSDate dateWithTimeIntervalSinceNow:1];
+    _futureAlert.fireDate = [NSDate dateWithTimeIntervalSinceNow:1];
     
-    futureAlert.timeZone = [NSTimeZone defaultTimeZone];
+    _futureAlert.timeZone = [NSTimeZone defaultTimeZone];
     
     self.count = 0;
     
