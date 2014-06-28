@@ -45,7 +45,7 @@ UILocalNotification *futureAlert;
     } else {
         
         self.count++;
-    
+        
         NSString *currentCount;
         
         currentCount = [NSString stringWithFormat:@"%d", self.count];
@@ -72,28 +72,6 @@ UILocalNotification *futureAlert;
         
     }];
     
-    if ([[UIDevice currentDevice] respondsToSelector:@selector(isMultitaskingSupported)])
-    
-    {
-    
-        double backgroundTime;
-        
-        backgroundTime = [[UIApplication sharedApplication] backgroundTimeRemaining];
-        
-        // NSLog(@"%f", ceil(backgroundTime));
-        
-        // NSLog(@"Multitasking Supported...");
-    
-    }
-    
-    else
-    
-    {
-    
-        // NSLog(@"Multitasking Not Supported...");
-    
-    }
-    
     futureAlert = [[UILocalNotification alloc] init];
     
     [futureAlert setAlertBody:@"..."];
@@ -113,7 +91,6 @@ UILocalNotification *futureAlert;
 - (void)didReceiveMemoryWarning {
     
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
     
 }
 
